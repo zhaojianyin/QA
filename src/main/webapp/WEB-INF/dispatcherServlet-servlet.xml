@@ -27,9 +27,4 @@
 	<!-- 能支持springmvc更高级的一些功能，JSR303校验，快捷的ajax...映射动态请求 -->
 	<mvc:annotation-driven />
 
-	<bean id="multipartResolver"
-		class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
-		<property name="maxUploadSize" value="10240000"></property>
-		<property name="defaultEncoding" value="utf-8"></property>
-	</bean>
 </beans>
