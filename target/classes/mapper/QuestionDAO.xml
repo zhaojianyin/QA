@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.nuc.zjy.qa.dao.QuestionDAO">
 	<sql id="table"> question</sql>
-	<sql id="selectFiled">id,title,content,comment_count,create_date,user_id,</sql>
+	<sql id="selectFiled">id,title,content,comment_count,create_date,user_id</sql>
 	<select id="selectLastQuestins" resultType="com.nuc.zjy.qa.bean.Question">
 		SELECT
 		<include refid="selectFiled" />
@@ -11,6 +11,6 @@
 		<if test="userId != 0">
 			WHERE user_id = #{userId}
 		</if>
-		OREDER BY id DESC
+		order BY id DESC
 	</select>
 </mapper>

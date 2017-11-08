@@ -5,6 +5,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
+import com.nuc.zjy.qa.intercept.LoginRequredIntercept;
 import com.nuc.zjy.qa.intercept.PassportIntercept;
 
 /**
@@ -22,9 +23,13 @@ public class QAWebConf extends WebMvcConfigurerAdapter {
 	@Autowired
 	PassportIntercept passportIntercept;
 
+	@Autowired
+	LoginRequredIntercept loginRequredIntercept;
+
 	@Override
 	public void addInterceptors(InterceptorRegistry registry) {
 		registry.addInterceptor(passportIntercept);
+		registry.addInterceptor(loginRequredIntercept).addPathPatterns("/user/*");// 用户登录页面
 		super.addInterceptors(registry);
 	}
 }

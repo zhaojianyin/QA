@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -32,12 +33,15 @@ public class LoginController {
 
 	@RequestMapping(path = { "/reg" }, method = RequestMethod.POST)
 	public String reg(Model model, @RequestParam("password") String password, @RequestParam("name") String name,
-			HttpServletResponse response) {
+			HttpServletResponse response, @RequestParam(value = "next", required = false) String next) {
 		Map<String, String> map = userService.register(name, password);
 		if (!map.containsKey("ticket")) {
 			Cookie cookie = new Cookie("ticket", map.get("ticket"));
 			cookie.setPath("/");
 			response.addCookie(cookie);
+			if (StringUtils.isEmpty(next)) {
+				return "redirect:" + next;
+			}
 		} else {
 			model.addAttribute("msg", map.get("msg"));
 			return "login";
@@ -47,13 +51,16 @@ public class LoginController {
 
 	@RequestMapping(path = { "/login" }, method = RequestMethod.POST)
 	public String login(Model model, @RequestParam("password") String password, @RequestParam("name") String name,
-			@RequestParam(value = "rememberme", defaultValue = "false") boolean remeberme,
-			HttpServletResponse response) {
+			@RequestParam(value = "rememberme", defaultValue = "false") boolean remeberme, HttpServletResponse response,
+			@RequestParam(value = "next", required = false) String next) {
 		Map<String, String> map = userService.login(name, password);
 		if (!map.containsKey("ticket")) {
 			Cookie cookie = new Cookie("ticket", map.get("ticket"));
 			cookie.setPath("/");
 			response.addCookie(cookie);
+			if (StringUtils.isEmpty(next)) {
+				return "redirect:" + next;
+			}
 		} else {
 			model.addAttribute("msg", map.get("msg"));
 			return "login";
@@ -65,5 +72,11 @@ public class LoginController {
 	public String loginout(@CookieValue("ticket") String ticket) {
 		userService.loginout(ticket);
 		return "redirect:/";
+	}
+
+	@RequestMapping(path = { "/reglogin" }, method = RequestMethod.POST)
+	public String reglogin(Model model, @RequestParam("next") String next) {
+		model.addAttribute("next", next);
+		return "login";
 	}
 }

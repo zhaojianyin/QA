@@ -12,6 +12,9 @@ import java.security.MessageDigest;
  * @version 1.0
  */
 public class Utils {
+
+	public static int USER_XX = 0;
+
 	/**
 	 * 进行MD5加密
 	 * 

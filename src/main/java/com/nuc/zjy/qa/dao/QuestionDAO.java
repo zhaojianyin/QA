@@ -35,8 +35,8 @@ public interface QuestionDAO {
 
 	List<Question> selectLastQuestins(@Param("userId") int userId);
 
-	@Update({ "update", TABLE_NAME, "set password = #{password} where id = #{id}" })
-	void updatePasword(Question question);
+	@Update({ "update", TABLE_NAME, "set comment_count = #{commentCount} where id = #{id}" })
+	void updateCommentCount(@Param("id") int id, @Param("commentCount") int commentCount);
 
 	@Delete({ "delete from ", TABLE_NAME, " where id = #{id}" })
 	void deleteById(int id);

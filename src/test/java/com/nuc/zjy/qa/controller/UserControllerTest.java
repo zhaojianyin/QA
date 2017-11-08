@@ -40,7 +40,7 @@ public class UserControllerTest {
 
 	@Test
 	public void test() throws Exception {
-		MvcResult andReturn = mockMvc.perform(MockMvcRequestBuilders.get("/userInfo")).andReturn();
+		MvcResult andReturn = mockMvc.perform(MockMvcRequestBuilders.get("/")).andReturn();
 		System.out.println(andReturn.getRequest().getAttribute("msgs"));
 	}
 

@@ -64,4 +64,9 @@ public class Msg {
 		this.extend = extend;
 	}
 
+	@Override
+	public String toString() {
+		return "Msg [code=" + code + ", msg=" + msg + ", extend=" + extend + "]";
+	}
+
 }

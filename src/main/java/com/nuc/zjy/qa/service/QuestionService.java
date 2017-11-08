@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.util.HtmlUtils;
 
 import com.nuc.zjy.qa.bean.Question;
 import com.nuc.zjy.qa.dao.QuestionDAO;
@@ -23,7 +24,26 @@ public class QuestionService {
 	@Autowired
 	QuestionDAO questionDAO;
 
+	@Autowired
+	Sensitive sensitive;
+
 	public List<Question> getLastQuestions(int userId) {
 		return questionDAO.selectLastQuestins(userId);
+	}
+
+	public void addQuestion(Question question) {
+		question.setContent(HtmlUtils.htmlEscape(question.getContent()));
+		question.setTitle(HtmlUtils.htmlEscape(question.getTitle()));
+		question.setContent(sensitive.filter(question.getContent()));
+		question.setTitle(sensitive.filter(question.getTitle()));
+		questionDAO.addQuestion(question);
+	}
+
+	public Question getById(int id) {
+		return questionDAO.selectByid(id);
+	}
+
+	public void updatequestionCommentCount(int entityId, int count) {
+		questionDAO.updateCommentCount(entityId, count);
 	}
 }
