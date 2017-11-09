@@ -10,7 +10,7 @@ import com.nuc.zjy.qa.dao.MessageDAO;
 
 /**
  * @项目名称：QA
- * @类名称：MessageService @类描述：
+ * @类名称：MessageService @类描述：消息的service
  *
  * @author 赵建银
  * @date 2017年11月8日
@@ -26,19 +26,44 @@ public class MessageService {
 	@Autowired
 	Sensitive sensitive;
 
+	/**
+	 * 添加消息
+	 * 
+	 * @param message
+	 */
 	public void addMessage(Message message) {
 		message.setContent(sensitive.filter(message.getContent()));
 		messageDAO.addMessage(message);
 	}
 
+	/**
+	 * 获取消息详情
+	 * 
+	 * @param conversionId
+	 * @return
+	 */
 	public List<Message> getConversionDetil(String conversionId) {
 		return messageDAO.getConversionId(conversionId);
 	}
 
+	/**
+	 * 获取用户消息列表
+	 * 
+	 * @param userId
+	 * @return
+	 */
 	public List<Message> getConversionList(int userId) {
 		return messageDAO.getConversionList(userId);
 	}
 
+	/**
+	 * 
+	 * 获取消息总数
+	 * 
+	 * @param userId
+	 * @param conversionId
+	 * @return
+	 */
 	public int getConversionCount(int userId, String conversionId) {
 		return messageDAO.getConversionCount(conversionId, userId);
 

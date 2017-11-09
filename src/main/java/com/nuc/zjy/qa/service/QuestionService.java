@@ -11,7 +11,7 @@ import com.nuc.zjy.qa.dao.QuestionDAO;
 
 /**
  * @项目名称：QA
- * @类名称：QuestionService @类描述：
+ * @类名称：QuestionService @类描述：问题service
  *
  * @author 赵建银
  * @date 2017年11月7日
@@ -27,10 +27,21 @@ public class QuestionService {
 	@Autowired
 	Sensitive sensitive;
 
+	/**
+	 * 获取当前用户的问题
+	 * 
+	 * @param userId
+	 * @return
+	 */
 	public List<Question> getLastQuestions(int userId) {
 		return questionDAO.selectLastQuestins(userId);
 	}
 
+	/**
+	 * 添加问题
+	 * 
+	 * @param question
+	 */
 	public void addQuestion(Question question) {
 		question.setContent(HtmlUtils.htmlEscape(question.getContent()));
 		question.setTitle(HtmlUtils.htmlEscape(question.getTitle()));
@@ -39,10 +50,23 @@ public class QuestionService {
 		questionDAO.addQuestion(question);
 	}
 
+	/**
+	 * 获取问题
+	 * 
+	 * @param id
+	 * @return
+	 */
 	public Question getById(int id) {
 		return questionDAO.selectByid(id);
 	}
 
+	/**
+	 * 
+	 * 更新评论的个数
+	 * 
+	 * @param entityId
+	 * @param count
+	 */
 	public void updatequestionCommentCount(int entityId, int count) {
 		questionDAO.updateCommentCount(entityId, count);
 	}

@@ -18,7 +18,7 @@ import com.nuc.zjy.qa.utils.Utils;
 
 /**
  * @项目名称：QA
- * @类名称：UserService @类描述：
+ * @类名称：UserService @类描述：用户service
  *
  * @author 赵建银
  * @date 2017年11月7日
@@ -41,7 +41,14 @@ public class UserService {
 	public User getUserByName(String name) {
 		return userDAO.selectByName(name);
 	}
-	
+
+	/**
+	 * 注册用户
+	 * 
+	 * @param name
+	 * @param password
+	 * @return
+	 */
 	public Map<String, String> register(String name, String password) {
 		Map<String, String> map = new HashMap<>();
 		if (StringUtils.isEmpty(name)) {
@@ -71,6 +78,13 @@ public class UserService {
 		return map;
 	}
 
+	/**
+	 * 用户登录
+	 * 
+	 * @param name
+	 * @param password
+	 * @return
+	 */
 	public Map<String, String> login(String name, String password) {
 		Map<String, String> map = new HashMap<>();
 		if (StringUtils.isEmpty(name)) {
@@ -108,6 +122,12 @@ public class UserService {
 		return loginTicket.getTicket();
 	}
 
+	/**
+	 * 
+	 * 退出
+	 * 
+	 * @param ticket
+	 */
 	public void loginout(String ticket) {
 		loginTicketDAO.updateStatus(ticket, 1);
 	}
