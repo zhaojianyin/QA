@@ -6,6 +6,8 @@ import java.io.InputStreamReader;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.springframework.stereotype.Service;
+
 /**
  * @项目名称：util
  * @类名称：Sensitive @类描述： 敏感词过滤，使用字典树（前缀树）
@@ -15,6 +17,7 @@ import java.util.Map;
  * @time 下午3:35:41
  * @version 1.0
  */
+@Service
 public class Sensitive {
 
 	public Sensitive() {

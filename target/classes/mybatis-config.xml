@@ -9,7 +9,7 @@
 	</settings>
 
 	<typeAliases>
-		<package name="com.nuc.zjy.blog.bean" />
+		<package name="com.nuc.zjy.qa.bean" />
 	</typeAliases>
 	
 	

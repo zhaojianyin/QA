@@ -13,15 +13,6 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
-/**
- * @项目名称：blog
- * @类名称：UserControllerTest @类描述：
- *
- * @author 赵建银
- * @date 2017年10月3日
- * @time 上午9:44:13
- * @version 1.0
- */
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
 @ContextConfiguration(value = { "classpath:applicationContext.xml",
@@ -43,5 +34,4 @@ public class UserControllerTest {
 		MvcResult andReturn = mockMvc.perform(MockMvcRequestBuilders.get("/")).andReturn();
 		System.out.println(andReturn.getRequest().getAttribute("msgs"));
 	}
-
 }

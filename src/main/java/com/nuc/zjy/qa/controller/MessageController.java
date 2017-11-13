@@ -82,7 +82,7 @@ public class MessageController {
 		return "letter";
 	}
 
-	@RequestMapping(value = "/msg/list")
+	@RequestMapping(value = "/msg/detail")
 	public String getConversionDetail(Model model, @RequestParam("conversionId") String conversionId) {
 		List<Message> MessageDetil = messageService.getConversionDetil(conversionId);
 		List<Msg> messages = new ArrayList<>();
