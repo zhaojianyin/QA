@@ -42,30 +42,32 @@ public class MessageController {
 
 	@RequestMapping(value = "/msg/addMessage", method = RequestMethod.POST)
 	@ResponseBody
-	public String addMessage(@RequestParam("toName") String toName, @RequestParam("content") String content) {
+	public Msg addMessage(@RequestParam("toName") String toName, @RequestParam("content") String content) {
 		Message message = new Message();
+		Msg msg = new Msg();
 		if (hostHolder.getUser() == null) {
-			// TODO 未登录
-			return "未登录";
+			msg.setCode(999);
+			return msg.add("msg", "未登录");
 		}
 
 		User user = userService.getUserByName(toName);
 		if (user == null) {
-			// TODO 不存在
-			return "不存在";
+			msg.setCode(1);
+			return msg.add("msg", "不存在");
 		}
 		message.setContent(content);
 		message.setCreateDate(new Date());
 		message.setFromId(hostHolder.getUser().getId());
 		message.setToId(user.getId());
 		message.setHasRead(0);
-		return "0";
+		msg.setCode(0);
+		return msg;
 	}
 
 	@RequestMapping(value = "/msg/list")
 	public String getConversionList(Model model) {
-		if (hostHolder.getUser() != null) {
-			return "redirect:relogin";
+		if (hostHolder.getUser() == null) {
+			return "redirect:/reglogin";
 		}
 		int localhost = hostHolder.getUser().getId();
 		List<Message> conversionList = messageService.getConversionList(localhost);
@@ -83,8 +85,8 @@ public class MessageController {
 	}
 
 	@RequestMapping(value = "/msg/detail")
-	public String getConversionDetail(Model model, @RequestParam("conversionId") String conversionId) {
-		List<Message> MessageDetil = messageService.getConversionDetil(conversionId);
+	public String getConversionDetail(Model model, @RequestParam("conversationId") String conversationId) {
+		List<Message> MessageDetil = messageService.getConversionDetil(conversationId);
 		List<Msg> messages = new ArrayList<>();
 		for (Message message : MessageDetil) {
 			Msg msg = new Msg();
@@ -93,6 +95,6 @@ public class MessageController {
 			messages.add(msg);
 		}
 		model.addAttribute("messages", messages);
-		return "letterdetail";
+		return "letterDetail";
 	}
 }

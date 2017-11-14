@@ -73,7 +73,7 @@ var oPopupAdd = new PopupAdd({
                 bSubmit = true;
                 // 提交内容
                 $.ajax({
-                    url: '/question/add',
+                    url: '/QA/question/add',
                     type: 'post',
                     data: oData,
                     dataType: 'json'

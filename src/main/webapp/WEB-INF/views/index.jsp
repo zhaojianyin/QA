@@ -12,6 +12,7 @@
 <title>首页</title>
 <link rel="stylesheet" href="${APP_PATH}/static/styles/index.css">
 <link rel="stylesheet" href="${APP_PATH}/static/styles/detail.css">
+
 </head>
 <body>
 	<jsp:include page="header.jsp"></jsp:include>
@@ -109,5 +110,6 @@
 	<jsp:include page="js.jsp"></jsp:include>
 	<script type="text/javascript"
 		src="${APP_PATH}/static/scripts/main/site/detail.js"></script>
+
 </body>
 </html>

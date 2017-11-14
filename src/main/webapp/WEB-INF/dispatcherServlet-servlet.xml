@@ -22,10 +22,7 @@
 	</bean>
 
 	<mvc:interceptors>
-		<mvc:interceptor>
-			<mvc:mapping path="/*" />
-			<bean class="com.nuc.zjy.qa.intercept.PassportIntercept"></bean>
-		</mvc:interceptor>
+		<bean class="com.nuc.zjy.qa.intercept.PassportIntercept"></bean>
 		<mvc:interceptor>
 			<mvc:mapping path="/user/*" />
 			<bean class="com.nuc.zjy.qa.intercept.LoginRequredIntercept"></bean>

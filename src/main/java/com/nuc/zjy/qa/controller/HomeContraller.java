@@ -39,6 +39,7 @@ public class HomeContraller {
 
 	@RequestMapping(path = { "/", "/index" }, method = { RequestMethod.GET })
 	public String index(Model model) {
+		System.out.println(hostHolder.getUser());
 		model.addAttribute("msgs", getQuestions(0));
 		return "index";
 	}

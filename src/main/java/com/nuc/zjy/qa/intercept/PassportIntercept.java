@@ -41,6 +41,7 @@ public class PassportIntercept implements HandlerInterceptor {
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
 			throws Exception {
+		
 		String ticket = null;
 		if (request.getCookies() != null) {
 			for (Cookie cookie : request.getCookies()) {
@@ -58,6 +59,7 @@ public class PassportIntercept implements HandlerInterceptor {
 
 			User user = userDao.selectByid(loginTicket.getUserId());
 			hostHolder.setUser(user);
+//			System.out.println("before"+user);
 		}
 		return true;
 	}
@@ -66,6 +68,7 @@ public class PassportIntercept implements HandlerInterceptor {
 	public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler,
 			ModelAndView modelAndView) throws Exception {
 		if (modelAndView != null) {
+//			System.out.println("post"+hostHolder.getUser());
 			modelAndView.addObject("user", hostHolder.getUser());
 		}
 	}
@@ -73,7 +76,9 @@ public class PassportIntercept implements HandlerInterceptor {
 	@Override
 	public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex)
 			throws Exception {
+//		System.out.println("after"+hostHolder.getUser());
 		hostHolder.clear();
+//		System.out.println("after clear"+hostHolder.getUser());
 	}
 
 }

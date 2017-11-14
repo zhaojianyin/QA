@@ -42,12 +42,12 @@ public class QuestionService {
 	 * 
 	 * @param question
 	 */
-	public void addQuestion(Question question) {
+	public int addQuestion(Question question) {
 		question.setContent(HtmlUtils.htmlEscape(question.getContent()));
 		question.setTitle(HtmlUtils.htmlEscape(question.getTitle()));
 		question.setContent(sensitive.filter(question.getContent()));
 		question.setTitle(sensitive.filter(question.getTitle()));
-		questionDAO.addQuestion(question);
+		return questionDAO.addQuestion(question);
 	}
 
 	/**

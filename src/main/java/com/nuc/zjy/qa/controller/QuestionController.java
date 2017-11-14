@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.nuc.zjy.qa.bean.Comment;
 import com.nuc.zjy.qa.bean.EntityType;
@@ -47,18 +48,27 @@ public class QuestionController {
 	UserService userService;
 
 	@RequestMapping(value = "/question/add", method = RequestMethod.POST)
-	public void addQuestion(@RequestParam("title") String title, @RequestParam("content") String content) {
+	@ResponseBody
+	public Msg addQuestion(@RequestParam("title") String title, @RequestParam("content") String content) {
 		Question question = new Question();
 		question.setTitle(title);
 		question.setContent(content);
 		question.setCommentCount(0);
 		question.setCreateDate(new Date());
+		System.out.println(getClass()+"--"+hostHolder.getUser());
 		if (hostHolder.getUser() != null) {
 			question.setUserId(hostHolder.getUser().getId());
 		} else {
 			question.setUserId(Utils.USER_XX);
 		}
-		questionService.addQuestion(question);
+		Msg msg = new Msg();
+		if (questionService.addQuestion(question) > 0) {
+			msg.setCode(0);
+			msg.setMsg("ok");
+			return msg;
+		}
+		msg.setCode(1);
+		return msg;
 	}
 
 	@RequestMapping(value = "/question/{qid}", method = RequestMethod.GET)
@@ -74,7 +84,7 @@ public class QuestionController {
 			comments.add(msg);
 		}
 		model.addAttribute("comments", comments);
-		return "xiangqingjiemian";
+		return "detail";
 
 	}
 

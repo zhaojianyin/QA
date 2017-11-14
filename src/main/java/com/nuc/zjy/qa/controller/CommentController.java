@@ -36,7 +36,7 @@ public class CommentController {
 	@Autowired
 	QuestionService questionService;
 
-	@RequestMapping(value = "addComment", method = RequestMethod.POST)
+	@RequestMapping(value = "/addComment", method = RequestMethod.POST)
 	public String addComment(@RequestParam("questionId") int questionId, @RequestParam("content") String content) {
 		Comment comment = new Comment();
 		comment.setContent(content);
@@ -51,7 +51,7 @@ public class CommentController {
 		commentService.addComment(comment);
 		int count = commentService.getCommentCount(comment.getEntityId(), comment.getEntityType());
 		questionService.updatequestionCommentCount(comment.getEntityId(), count);
-		return content;
+		return "redirect:/question/" + questionId;
 	}
 
 }
