@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%
 	pageContext.setAttribute("APP_PATH", request.getContextPath());
 %>
@@ -31,28 +32,32 @@
 	margin-top: 0
 }
 </style>
-<title>Insert title here</title>
+<title>head</title>
 </head>
 <body>
 <body class="zhi $!{bodyclass}">
 	<div role="navigation" class="zu-top">
 		<div class="zg-wrap modal-shifting clearfix" id="zh-top-inner">
-			<a href="/" class="zu-top-link-logo" id="zh-top-link-logo"
+			<a href="${APP_PATH}/" class="zu-top-link-logo" id="zh-top-link-logo"
 				data-za-c="view_home" data-za-a="visit_home"
 				data-za-l="top_navigation_zhihu_logo">牛客</a>
 			<div class="top-nav-profile">
-				<ul class="topnav-noauth clearfix">
-					<li><a href="${APP_PATH}/reglogin">注册/登陆</a></li>
-				</ul>
-				<a href="${APP_PATH}/user/1" class="zu-top-nav-userinfo " id=":0"
-					role="button" aria-haspopup="true" aria-activedescendant=""> <span
-					class="name"></span> <img class="Avatar" src="" alt=""> <span
-					id="zh-top-nav-new-pm" class="zg-noti-number zu-top-nav-pm-count"
-					style="visibility: hidden" data-count="0"> </span>
+				<c:if test="${empty user}">
+					<ul class="topnav-noauth clearfix">
+						<li><a href="${APP_PATH}/reglogin">注册/登陆</a></li>
+					</ul>
+				</c:if>
+				<c:if test="${not empty user }">
+				<a href="${APP_PATH}/user/${user.id}" class="zu-top-nav-userinfo "
+					id=":0" role="button" aria-haspopup="true" aria-activedescendant="">
+					<span class="name">${user.name}</span> <img class="Avatar"
+					src="${user.headUrl}" alt=""> <span id="zh-top-nav-new-pm"
+					class="zg-noti-number zu-top-nav-pm-count"
+					style="visibility: hidden" data-count="0"></span>
 				</a>
 				<ul class="top-nav-dropdown" id="top-nav-profile-dropdown"
 					aria-labelledby=":0">
-					<li><a href="${APP_PATH}/user/1" tabindex="-1"
+					<li><a href="${APP_PATH}/user/${user.id}" tabindex="-1"
 						id=":1"> <i class="zg-icon zg-icon-dd-home"></i>我的主页
 					</a></li>
 					<li><a href="${APP_PATH}/msg/list" tabindex="-1" id=":2">
@@ -65,11 +70,13 @@
 							class="zg-icon zg-icon-dd-logout"></i>退出
 					</a></li>
 				</ul>
+				</c:if>
 			</div>
+			
 			<button class="zu-top-add-question" id="zu-top-add-question">提问</button>
 			<div role="search" id="zh-top-search" class="zu-top-search">
-				<form method="GET" action="${APP_PATH}/search" id="zh-top-search-form"
-					class="zu-top-search-form">
+				<form method="GET" action="${APP_PATH}/search"
+					id="zh-top-search-form" class="zu-top-search-form">
 					<label for="q" class="hide-text">牛客搜索</label><input type="text"
 						class="zu-top-search-input" id="q" name="q" autocomplete="off"
 						value="" placeholder="搜索你感兴趣的内容..." role="combobox"
@@ -89,10 +96,10 @@
 					<li class="zu-top-nav-li " id="zh-top-nav-explore"><a
 						class="zu-top-nav-link" href="${APP_PATH}/pullfeeds">发现</a></li>
 					<li class="top-nav-noti zu-top-nav-li "><a
-						class="zu-top-nav-link" href="" id="zh-top-nav-count-wrap"
-						role="button"><span class="mobi-arrow"></span>消息<span
-							id="zh-top-nav-count" class="zu-top-nav-count zg-noti-number"
-							style="display: none;">0</span></a></li>
+						class="zu-top-nav-link" href="${APP_PATH }/"
+						id="zh-top-nav-count-wrap" role="button"><span
+							class="mobi-arrow"></span>消息<span id="zh-top-nav-count"
+							class="zu-top-nav-count zg-noti-number" style="display: none;">0</span></a></li>
 				</ul>
 				<div class="zu-top-nav-live zu-noti7-popup zg-r5px no-hovercard"
 					id="zh-top-nav-live-new" role="popup" tabindex="0">
@@ -183,10 +190,8 @@
 						</div>
 						<div class="zm-noti7-frame-border bottom"></div>
 						<div class="zm-noti7-popup-footer">
-							<a href=""
-								class="zm-noti7-popup-footer-all zg-right">查看全部 »</a> <a
-								href=""
-								class="zm-noti7-popup-footer-set" title="通知设置"><i
+							<a href="" class="zm-noti7-popup-footer-all zg-right">查看全部 »</a>
+							<a href="" class="zm-noti7-popup-footer-set" title="通知设置"><i
 								class="zg-icon zg-icon-settings"></i></a>
 						</div>
 					</div>

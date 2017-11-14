@@ -4,26 +4,27 @@
 <%
 	pageContext.setAttribute("APP_PATH", request.getContextPath());
 %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Insert title here</title>
-
+<title>首页</title>
 <link rel="stylesheet" href="${APP_PATH}/static/styles/index.css">
 <link rel="stylesheet" href="${APP_PATH}/static/styles/detail.css">
 </head>
 <body>
+${msg }
 	<jsp:include page="header.jsp"></jsp:include>
-	<div class="zg-wrap zu-main clearfix " role="main">
+	${msg }
+	<div class="zg-wrap zu-main clearfix" role="main">
 		<div class="zu-main-content">
 			<div class="zu-main-content-inner">
 				<div class="zg-section" id="zh-home-list-title">
 					<i class="zg-icon zg-icon-feedlist"></i>最新动态 <input type="hidden"
 						id="is-topstory"> <span
 						class="zg-right zm-noti-cleaner-setting" style="list-style: none">
-						<a href=""
-						class="zg-link-gray-normal"> <i
+						<a href="" class="zg-link-gray-normal"> <i
 							class="zg-icon zg-icon-settings"></i>设置
 					</a>
 					</span>
@@ -39,19 +40,15 @@
 							data-init="{&quot;params&quot;: {}, &quot;nodename&quot;: &quot;TopStory2FeedList&quot;}"
 							data-delayed="true" data-za-module="TopStoryFeedList">
 
-							<div
-								class="feed-item folding feed-item-hook feed-item-2
-                        "
+							<div class="feed-item folding feed-item-hook feed-item-2"
 								feed-item-a="" data-type="a" id="feed-2"
 								data-za-module="FeedItem" data-za-index="">
-								<meta itemprop="ZReactor" data-id="389034"
-									data-meta="{&quot;source_type&quot;: &quot;promotion_answer&quot;, &quot;voteups&quot;: 4168, &quot;comments&quot;: 69, &quot;source&quot;: []}">
 								<div class="feed-item-inner">
 									<div class="avatar">
-										<a title="$!{vo.user.name}" data-tip="p$t$amuro1230"
+										<a title="${msg.extend.user.name}" data-tip="p$t$amuro1230"
 											class="zm-item-link-avatar" target="_blank"
-											href="https://nowcoder.com/people/amuro1230"> <img src=""
-											class="zm-item-img-avatar"></a>
+											href="${APP_PATH }/user/${msg.extend.user.id}"> <img
+											src="${msg.extend.user.headUrl}" class="zm-item-img-avatar"></a>
 									</div>
 									<div class="feed-main">
 										<div class="feed-content" data-za-module="AnswerItem">
@@ -61,6 +58,7 @@
 												<a class="question_link" target="_blank"
 													href="${APP_PATH}/question/${msg.extend.question.id}">${msg.extend.question.title}</a>
 											</h2>
+
 											<div class="feed-question-detail-item">
 												<div class="question-description-plain zm-editable-content"></div>
 											</div>
@@ -71,13 +69,10 @@
 												</div>
 												<div class="zm-item-answer-author-info">
 													<a class="author-link" data-tip="p$b$amuro1230"
-														target="_blank" href="${APP_PATH }/user/${msg.extend.user.id}">${msg.extend.user.name}</a>
-												</div>
-												<div class="zm-item-vote-info" data-votecount="4168"
-													data-za-module="VoteInfo">
-													<span class="voters text"> <a href="#"
-														class="more text"> <span class="js-voteCount">4168</span>&nbsp;人赞同
-													</a></span>
+														target="_blank"
+														href="${APP_PATH}/user/${msg.extend.user.id}">${msg.extend.user.name}</a>
+													<fmt:formatDate value="${msg.extend.question.createDate}"
+														timeStyle="yyyy-MM-dd" />
 												</div>
 												<div class="zm-item-rich-text expandable js-collapse-body"
 													data-resourceid="123114" data-action="/answer/content"

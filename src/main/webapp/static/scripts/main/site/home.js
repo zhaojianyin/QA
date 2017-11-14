@@ -2,6 +2,9 @@
     var PopupAdd = Base.getClass('main.component.PopupAdd');
     var PopupMsg = Base.getClass('main.component.PopupMsg');
 
+    
+    
+    
     Base.ready({
         initialize: fInitialize,
         binds: {
@@ -10,6 +13,7 @@
         }
     });
 
+    
     function fInitialize() {
         var that = this;
     }

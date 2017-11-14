@@ -21,7 +21,7 @@ public interface LoginTicketDAO {
 	String INSERT_FIELDS = "userid,expired,status,ticket";
 	String SELECT_FIELDS = "id," + INSERT_FIELDS;
 
-	@Insert({ "insert into ", TABLE_NAME, "(", INSERT_FIELDS, ") values (#{userid},#{expired},#{status},#{ticket})" })
+	@Insert({ "insert into ", TABLE_NAME, "(", INSERT_FIELDS, ") values (#{userId},#{expired},#{status},#{ticket})" })
 	int addTicket(LoginTicket loginTicket);
 
 	@Select({ "select", INSERT_FIELDS, "from", TABLE_NAME, "where ticket = #{ticket}" })

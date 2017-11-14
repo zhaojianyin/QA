@@ -71,7 +71,7 @@ public class UserService {
 		user.setHeadUrl(String.format("http://images.newcoder.com/head/%dt.png", new Random().nextInt(1000)));
 		user.setPassword(Utils.MD5(password + user.getSalt()));
 		userDAO.addUser(user);
-
+		user = userDAO.selectByName(name);
 		String ticket = addTicket(user.getId());
 		map.put("ticket", ticket);
 

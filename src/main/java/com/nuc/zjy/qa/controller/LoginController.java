@@ -33,11 +33,15 @@ public class LoginController {
 
 	@RequestMapping(path = { "/reg" }, method = RequestMethod.POST)
 	public String reg(Model model, @RequestParam("password") String password, @RequestParam("name") String name,
-			HttpServletResponse response, @RequestParam(value = "next", required = false) String next) {
+			@RequestParam(value = "rememberme", defaultValue = "false") boolean remeberme, HttpServletResponse response,
+			@RequestParam(value = "next", required = false) String next) {
 		Map<String, String> map = userService.register(name, password);
-		if (!map.containsKey("ticket")) {
+		if (map.containsKey("ticket")) {
 			Cookie cookie = new Cookie("ticket", map.get("ticket"));
 			cookie.setPath("/");
+			if (remeberme) {
+				cookie.setMaxAge(3600 * 24 * 5);
+			}
 			response.addCookie(cookie);
 			if (StringUtils.isEmpty(next)) {
 				return "redirect:" + next;
@@ -54,9 +58,12 @@ public class LoginController {
 			@RequestParam(value = "rememberme", defaultValue = "false") boolean remeberme, HttpServletResponse response,
 			@RequestParam(value = "next", required = false) String next) {
 		Map<String, String> map = userService.login(name, password);
-		if (!map.containsKey("ticket")) {
+		if (map.containsKey("ticket")) {
 			Cookie cookie = new Cookie("ticket", map.get("ticket"));
 			cookie.setPath("/");
+			if (remeberme) {
+				cookie.setMaxAge(3600 * 24 * 5);
+			}
 			response.addCookie(cookie);
 			if (StringUtils.isEmpty(next)) {
 				return "redirect:" + next;
@@ -68,14 +75,14 @@ public class LoginController {
 		return "redirect:/";
 	}
 
-	@RequestMapping(path = { "/loginout" }, method = RequestMethod.POST)
+	@RequestMapping(path = { "/logout" }, method = RequestMethod.GET)
 	public String loginout(@CookieValue("ticket") String ticket) {
 		userService.loginout(ticket);
 		return "redirect:/";
 	}
 
-	@RequestMapping(path = { "/reglogin" }, method = RequestMethod.POST)
-	public String reglogin(Model model, @RequestParam("next") String next) {
+	@RequestMapping(path = { "/reglogin" }, method = RequestMethod.GET)
+	public String reglogin(Model model, @RequestParam(value = "next", required = false) String next) {
 		model.addAttribute("next", next);
 		return "login";
 	}
