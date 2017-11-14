@@ -10,7 +10,6 @@
 <title>sssss</title>
 </head>
 <body>
-
 	<script type="text/javascript"
 		src="${APP_PATH}/static/scripts/main/jquery.js"></script>
 	<script type="text/javascript"

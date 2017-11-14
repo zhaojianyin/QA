@@ -14,9 +14,7 @@
 <link rel="stylesheet" href="${APP_PATH}/static/styles/detail.css">
 </head>
 <body>
-${msg }
 	<jsp:include page="header.jsp"></jsp:include>
-	${msg }
 	<div class="zg-wrap zu-main clearfix" role="main">
 		<div class="zu-main-content">
 			<div class="zu-main-content-inner">
@@ -68,9 +66,6 @@ ${msg }
 														href="javascript:;" data-bind-votecount="">${msg.extend.question.commentCount}</a>
 												</div>
 												<div class="zm-item-answer-author-info">
-													<a class="author-link" data-tip="p$b$amuro1230"
-														target="_blank"
-														href="${APP_PATH}/user/${msg.extend.user.id}">${msg.extend.user.name}</a>
 													<fmt:formatDate value="${msg.extend.question.createDate}"
 														timeStyle="yyyy-MM-dd" />
 												</div>
