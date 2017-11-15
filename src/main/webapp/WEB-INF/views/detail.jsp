@@ -21,19 +21,6 @@
 			<div class="zu-main-content-inner">
 				<meta itemprop="isTopQuestion" content="false">
 				<meta itemprop="visitsCount" content="402">
-
-				<!-- <div class="zm-tag-editor zg-section">
-                <div class="zm-tag-editor-labels zg-clear">
-                    <a data-tip="t$b$19550730" class="zm-item-tag" href="">新浪微博</a>
-                    <a data-tip="t$b$19554412" class="zm-item-tag" href="">网络营销</a>
-                    <a data-tip="t$b$19559739" class="zm-item-tag" href="">微博粉丝</a>
-                    <a data-tip="t$b$19560290" class="zm-item-tag" href="">僵尸粉</a>
-                    <a data-tip="t$b$19565757" class="zm-item-tag" href="">网络水军</a>
-                    <a href="javascript:;" class="zu-edit-button" name="edit">
-                        <i class="zu-edit-button-icon"></i>修改</a>
-                </div>
-            </div> -->
-
 				<div id="zh-question-title" data-editable="true"
 					class="zm-editable-status-normal">
 					<h2 class="zm-item-title">
@@ -80,15 +67,33 @@
 							<meta itemprop="answer-id" content="22162611">
 							<meta itemprop="answer-url-token" content="66862039">
 							<a class="zg-anchor-hidden" name="answer-22162611"></a>
-
 							<div class="zm-votebar goog-scrollfloater js-vote"
 								data-id="${comment.extend.comment.id}">
-								<button class="up js-like pressed" title="赞同">
+								<c:if test="${comment.extend.liked > 0}">
+									<button class="up js-like pressed" title="赞同">
+										<i class="icon vote-arrow"></i> <span
+											class="count js-voteCount">${comment.extend.likeCount}</span>
+										<span class="label sr-only">赞同</span>
+									</button>
+								</c:if>
+								<c:if test="${comment.extend.liked <= 0}">
 									<button class="up js-like" title="赞同">
 										<i class="icon vote-arrow"></i> <span
-											class="count js-voteCount">1</span> <span
-											class="label sr-only">赞同</span>
+											class="count js-voteCount">${comment.extend.likeCount}</span>
+										<span class="label sr-only">赞同</span>
 									</button>
+								</c:if>
+
+								<c:if test="${comment.extend.liked < 0}">
+									<button class="down js-dislike pressed" title="反对，不会显示你的姓名">
+										<i class="icon vote-arrow"></i> <span class="label sr-only">反对，不会显示你的姓名</span>
+									</button>
+								</c:if>
+								<c:if test="${comment.extend.liked >= 0}">
+									<button class="down js-dislike" title="反对，不会显示你的姓名">
+										<i class="icon vote-arrow"></i> <span class="label sr-only">反对，不会显示你的姓名</span>
+									</button>
+								</c:if>
 							</div>
 							<div class="answer-head">
 								<div class="zm-item-answer-author-info">
@@ -100,7 +105,7 @@
 								</div>
 								<div class="zm-item-vote-info">
 									<span class="voters text"> <a href="" class="more text"><span
-											class="js-voteCount">1</span>&nbsp;人赞同</a>
+											class="js-voteCount">${comment.extend.likeCount}</span>&nbsp;人赞同</a>
 									</span>
 								</div>
 							</div>
@@ -120,7 +125,7 @@
 											value="${comment.extend.comment.createDate }"
 											timeStyle="yyyy-MM-dd" /></a> <a href="" name="addcomment"
 										class="meta-item toggle-comment js-toggleCommentBox"> <i
-										class="z-icon-comment"></i>4 条评论
+										class="z-icon-comment"></i>0 条评论
 									</a>
 
 									<button class="item-collapse js-collapse"
@@ -160,6 +165,6 @@
 	</div>
 	<jsp:include page="js.jsp"></jsp:include>
 	<script type="text/javascript"
-		src="${APP_PATH}/scripts/main/site/detail.js"></script>
+		src="${APP_PATH}/static/scripts/main/site/detail.js"></script>
 </body>
 </html>

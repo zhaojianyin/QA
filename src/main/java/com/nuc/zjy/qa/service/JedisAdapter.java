@@ -22,7 +22,7 @@ public class JedisAdapter implements InitializingBean {
 
 	@Override
 	public void afterPropertiesSet() throws Exception {
-		pool = new JedisPool("redis://localhost:6379/10");
+		pool = new JedisPool("redis://192.168.42.66:6379/10");
 	}
 
 	/**

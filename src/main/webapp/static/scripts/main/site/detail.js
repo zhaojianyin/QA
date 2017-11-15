@@ -33,19 +33,19 @@
             return;
         }
         that.isVote = true;
-        Action[bLike ? 'like' : 'dislike']({
+        Action[bLike ? "like" : "dislike"]({
             commentId: sId,
             call: function (oResult) {
                 // 调整样式
                 oDv.find('.pressed').removeClass('pressed');
                 oDv.find(bLike ? '.js-like' : '.js-dislike').addClass('pressed');
                 // 更新数量
-                oDv.closest('div.js-comment').find('span.js-voteCount').html(oResult.msg);
+                oDv.closest('div.js-comment').find('span.js-voteCount').html(oResult.extend.msg);
             },
             error: function (oResult) {
-                if (oResult.code === 999) {
+                if (oResult.code == 999) {
                     alert('请登录后再操作');
-                    window.location.href = '/reglogin?next=' + window.decodeURIComponent(window.location.href);
+                    window.location.href = '/QA/reglogin?next=' + window.decodeURIComponent(window.location.href);
                 } else {
                     alert('出现错误，请重试');
                 }

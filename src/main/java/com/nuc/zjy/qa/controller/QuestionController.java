@@ -19,6 +19,7 @@ import com.nuc.zjy.qa.bean.HostHolder;
 import com.nuc.zjy.qa.bean.Msg;
 import com.nuc.zjy.qa.bean.Question;
 import com.nuc.zjy.qa.service.CommentService;
+import com.nuc.zjy.qa.service.LikeService;
 import com.nuc.zjy.qa.service.QuestionService;
 import com.nuc.zjy.qa.service.UserService;
 import com.nuc.zjy.qa.utils.Utils;
@@ -47,6 +48,9 @@ public class QuestionController {
 	@Autowired
 	UserService userService;
 
+	@Autowired
+	LikeService likeService;
+
 	@RequestMapping(value = "/question/add", method = RequestMethod.POST)
 	@ResponseBody
 	public Msg addQuestion(@RequestParam("title") String title, @RequestParam("content") String content) {
@@ -55,7 +59,6 @@ public class QuestionController {
 		question.setContent(content);
 		question.setCommentCount(0);
 		question.setCreateDate(new Date());
-		System.out.println(getClass()+"--"+hostHolder.getUser());
 		if (hostHolder.getUser() != null) {
 			question.setUserId(hostHolder.getUser().getId());
 		} else {
@@ -79,7 +82,14 @@ public class QuestionController {
 		List<Msg> comments = new ArrayList<>();
 		for (Comment comment : commentsList) {
 			Msg msg = new Msg();
+			if (hostHolder.getUser() == null) {
+				msg.add("liked", 0);
+			} else {
+				msg.add("liked", likeService.getLikeStatus(hostHolder.getUser().getId(), comment.getId(),
+						EntityType.ENTITY_COMMENT));
+			}
 			msg.add("comment", comment);
+			msg.add("likeCount", likeService.getLikeCount(comment.getId(), EntityType.ENTITY_COMMENT));
 			msg.add("user", userService.getUser(comment.getUserId()));
 			comments.add(msg);
 		}

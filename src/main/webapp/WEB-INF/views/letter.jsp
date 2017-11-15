@@ -27,13 +27,16 @@
 									timeStyle="yyyy-MM-dd" /> </span>
 							<div class="l-operate-bar">
 
-								<a href="${APP_PATH}/msg/detail?conversationId=${conversation.extend.message.conversationId}">
+								<a
+									href="${APP_PATH}/msg/detail?conversationId=${conversation.extend.message.conversationId}">
 									共${conversation.extend.message.id}条会话 </a>
 							</div>
 						</div>
 						<div class="chat-headbox">
-							<span class="msg-num"> ${conversation.extend.unread} </span> <a
-								class="list-head"> <img alt="头像"
+							<c:if test="${conversation.extend.unread != 0}">
+								<span class="msg-num">${conversation.extend.unread}</span>
+							</c:if>
+							<a class="list-head"> <img alt="头像"
 								src="${conversation.extend.user.headUrl}">
 							</a>
 						</div>

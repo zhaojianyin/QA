@@ -39,12 +39,11 @@ public class HomeContraller {
 
 	@RequestMapping(path = { "/", "/index" }, method = { RequestMethod.GET })
 	public String index(Model model) {
-		System.out.println(hostHolder.getUser());
 		model.addAttribute("msgs", getQuestions(0));
 		return "index";
 	}
 
-	@RequestMapping("/userIndex/{userId}")
+	@RequestMapping("/user/{userId}")
 	public String UserIndex(@PathVariable("userId") int userId, Model model) {
 		model.addAttribute("msgs", getQuestions(userId));
 		return "index";

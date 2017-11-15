@@ -79,11 +79,12 @@ var oPopupAdd = new PopupAdd({
                 bSubmit = true;
                 // 提交内容
                 $.ajax({
-                    url: '/msg/addMessage',
+                    url: '/QA/msg/addMessage',
                     type: 'post',
                     data: oData,
                     dataType: 'json'
                 }).done(function (oResult) {
+                	alert(oResult.code);
                     // 未登陆，跳转到登陆页面
                     if (oResult.code === 999) {
                         window.location.href = '/reglogin?next=' + window.encodeURIComponent(window.location.href);

@@ -80,12 +80,11 @@ public class LikeService {
 	/**
 	 * 获取赞总数
 	 * 
-	 * @param userId
 	 * @param entityId
 	 * @param entityType
 	 * @return
 	 */
-	public long getLikeCount(int userId, int entityId, int entityType) {
+	public long getLikeCount(int entityId, int entityType) {
 		String likekey = RedisKeyUtil.getLikeKey(entityId, entityType);
 		return jedisAdapter.scard(likekey);
 	}

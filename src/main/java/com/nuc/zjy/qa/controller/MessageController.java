@@ -60,6 +60,7 @@ public class MessageController {
 		message.setFromId(hostHolder.getUser().getId());
 		message.setToId(user.getId());
 		message.setHasRead(0);
+		messageService.addMessage(message);
 		msg.setCode(0);
 		return msg;
 	}
