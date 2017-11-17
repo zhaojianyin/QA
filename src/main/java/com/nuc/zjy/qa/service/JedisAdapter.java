@@ -1,10 +1,15 @@
 package com.nuc.zjy.qa.service;
 
+import java.io.IOException;
+import java.util.List;
+import java.util.Set;
+
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.stereotype.Service;
 
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
+import redis.clients.jedis.Transaction;
 
 /**
  * @项目名称：QA
@@ -110,6 +115,106 @@ public class JedisAdapter implements InitializingBean {
 			}
 		}
 		return false;
+	}
+
+	public Jedis getJedis() {
+		return pool.getResource();
+	}
+
+	/**
+	 * 开启事务
+	 * 
+	 * @param jedis
+	 * @return
+	 */
+	public Transaction multi(Jedis jedis) {
+		try {
+			return jedis.multi();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	public List<Object> exec(Transaction tx, Jedis jedis) {
+		try {
+			return tx.exec();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			if (tx != null) {
+				try {
+					tx.close();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+
+			}
+			if (jedis != null) {
+				jedis.close();
+			}
+		}
+		return null;
+	}
+
+	public long zadd(String key, double score, String value) {
+		Jedis jedis = null;
+		try {
+			jedis = pool.getResource();
+			return jedis.zadd(key, score, value);
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			if (jedis != null) {
+				jedis.close();
+			}
+		}
+		return 0;
+	}
+
+	public Set<String> zrevrange(String key, int start, int end) {
+		Jedis jedis = null;
+		try {
+			jedis = pool.getResource();
+			return jedis.zrevrange(key, start, end);
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			if (jedis != null) {
+				jedis.close();
+			}
+		}
+		return null;
+	}
+
+	public long zcard(String key) {
+		Jedis jedis = null;
+		try {
+			jedis = pool.getResource();
+			return jedis.zcard(key);
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			if (jedis != null) {
+				jedis.close();
+			}
+		}
+		return 0;
+	}
+
+	public Double zscore(String key, String member) {
+		Jedis jedis = null;
+		try {
+			jedis = pool.getResource();
+			return jedis.zscore(key, member);
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			if (jedis != null) {
+				jedis.close();
+			}
+		}
+		return null;
 	}
 
 }

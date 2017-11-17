@@ -18,7 +18,9 @@ import com.nuc.zjy.qa.bean.EntityType;
 import com.nuc.zjy.qa.bean.HostHolder;
 import com.nuc.zjy.qa.bean.Msg;
 import com.nuc.zjy.qa.bean.Question;
+import com.nuc.zjy.qa.bean.User;
 import com.nuc.zjy.qa.service.CommentService;
+import com.nuc.zjy.qa.service.FollowService;
 import com.nuc.zjy.qa.service.LikeService;
 import com.nuc.zjy.qa.service.QuestionService;
 import com.nuc.zjy.qa.service.UserService;
@@ -51,6 +53,9 @@ public class QuestionController {
 	@Autowired
 	LikeService likeService;
 
+	@Autowired
+	FollowService followService;
+
 	@RequestMapping(value = "/question/add", method = RequestMethod.POST)
 	@ResponseBody
 	public Msg addQuestion(@RequestParam("title") String title, @RequestParam("content") String content) {
@@ -79,6 +84,31 @@ public class QuestionController {
 		Question question = questionService.getById(qid);
 		List<Comment> commentsList = commentService.getCommentByEntity(qid, EntityType.ENTITY_QUESTION);
 		model.addAttribute("question", question);
+		if (hostHolder.getUser() == null) {
+			model.addAttribute("followed", false);
+		} else {
+			model.addAttribute("followed",
+					followService.isFollower(hostHolder.getUser().getId(), qid, EntityType.ENTITY_QUESTION));
+		}
+
+		// 关注用户
+		List<Msg> followers = new ArrayList<>();
+
+		List<Integer> followers2 = followService.getFollowers(qid, EntityType.ENTITY_QUESTION, 20);
+		
+		for (Integer integer : followers2) {
+			Msg msg = new Msg();
+			User user = userService.getUser(integer);
+			if (user == null) {
+				continue;
+			}
+			msg.add("name", user.getName());
+			msg.add("headUrl", user.getHeadUrl());
+			msg.add("id", user.getId());
+			followers.add(msg);
+		}
+		model.addAttribute("followers", followers);
+
 		List<Msg> comments = new ArrayList<>();
 		for (Comment comment : commentsList) {
 			Msg msg = new Msg();

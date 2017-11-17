@@ -10,9 +10,11 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.nuc.zjy.qa.bean.EntityType;
 import com.nuc.zjy.qa.bean.HostHolder;
 import com.nuc.zjy.qa.bean.Msg;
 import com.nuc.zjy.qa.bean.Question;
+import com.nuc.zjy.qa.service.FollowService;
 import com.nuc.zjy.qa.service.QuestionService;
 import com.nuc.zjy.qa.service.UserService;
 
@@ -33,9 +35,12 @@ public class HomeContraller {
 
 	@Autowired
 	QuestionService questionService;
-	
+
 	@Autowired
 	HostHolder hostHolder;
+
+	@Autowired
+	FollowService followService;
 
 	@RequestMapping(path = { "/", "/index" }, method = { RequestMethod.GET })
 	public String index(Model model) {
@@ -55,6 +60,7 @@ public class HomeContraller {
 		for (Question question : questions) {
 			Msg msg = new Msg();
 			msg.add("question", question);
+			msg.add("count", followService.getFollowerCount(question.getId(), EntityType.ENTITY_QUESTION));
 			msg.add("user", userService.getUser(question.getUserId()));
 			msgs.add(msg);
 		}
