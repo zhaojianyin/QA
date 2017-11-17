@@ -31,31 +31,34 @@
 					class="zm-item-rich-text zm-editable-status-normal">
 					<div class="zm-editable-content">${question.content}</div>
 				</div>
-				<%-- <div class="zm-side-section">
+				<div class="zm-side-section">
 					<div class="zm-side-section-inner"
 						id="zh-question-side-header-wrap">
-						#if ($followed)
-						<button
-							class="follow-button zg-follow zg-btn-white js-follow-question"
-							data-id="${question.id}" data-status="1">取消关注</button>
-						#else
-						<button
-							class="follow-button zg-follow zg-btn-green js-follow-question"
-							data-id="${question.id}">关注问题</button>
-						#end
+						<c:if test="${followed == true}">
+							<button
+								class="follow-button zg-follow zg-btn-white js-follow-question"
+								data-id="${question.id}" data-status="1">取消关注</button>
+						</c:if>
+						<c:if test="${followed == false}">
+							<button
+								class="follow-button zg-follow zg-btn-green js-follow-question"
+								data-id="${question.id}">关注问题</button>
+						</c:if>
 						<div class="zh-question-followers-sidebar">
 							<div class="zg-gray-normal">
-								<a href="javascript:void(0);"><strong class="js-user-count">${followUsers.size()}</strong></a>人关注该问题
+								<a href="javascript:void(0);"><strong class="js-user-count">${followers.size()}</strong></a>人关注该问题
 							</div>
 							<div class="list zu-small-avatar-list zg-clear js-user-list">
-								#foreach($vo in $followUsers) <a
-									class="zm-item-link-avatar js-user-${vo.id}"
-									href="/user/${vo.id}" data-original_title="${vo.name}"> <img
-									src="${vo.headUrl}" class="zm-item-img-avatar"></a> #end
+							
+								<c:forEach var="vo" items="${followers }">
+									<a class="zm-item-link-avatar js-user-${vo.extend.id}"
+										href="${APP_PATH }/user/${vo.extend.id}" data-original_title="${vo.extend.name}"> <img
+										src="${vo.extend.headUrl}" class="zm-item-img-avatar"></a>
+								</c:forEach>
 							</div>
 						</div>
 					</div>
-				</div> --%>
+				</div>
 				<div id="zh-question-answer-wrap" data-pagesize="10"
 					class="zh-question-answer-wrapper navigable"
 					data-widget="navigable"

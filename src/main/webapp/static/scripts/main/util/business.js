@@ -66,13 +66,14 @@
                     // 文字
                     oEl.html(bFollow ? '关注问题' : '取消关注');
                     // 修改数量
-                    oCountEl.html(oResult.count);
+                    oCountEl.html(oResult.extend.msg.count);
                     if (bFollow) {
+                    	
                         // 移除用户
-                        oListEl.find('.js-user-' + oResult.id).remove();
+                        oListEl.find('.js-user-' + oResult.extend.msg.id).remove();
                     } else {
                         // 显示用户
-                        oListEl.prepend('<a class="zm-item-link-avatar js-user-' + oResult.id + '" href="/user/' + oResult.id + '" data-original_title="' + oResult.name + '"><img src="' + oResult.headUrl + '" class="zm-item-img-avatar"></a>');
+                        oListEl.prepend('<a class="zm-item-link-avatar js-user-' + oResult.extend.msg.id + '" href="/QA/user/' + oResult.extend.msg.id + '" data-original_title="' + oResult.extend.msg.name + '"><img src="' + oResult.extend.msg.headUrl + '" class="zm-item-img-avatar"></a>');
                     }
                 },
                 error: function (oResult) {

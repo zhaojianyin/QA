@@ -64,16 +64,13 @@
 											<div class="expandable entry-body">
 												<div class="zm-item-vote">
 													<a class="zm-item-vote-count js-expand js-vote-count"
-														href="javascript:;" data-bind-votecount="">${msg.extend.question.commentCount}</a>
+														href="javascript:;" data-bind-votecount="">${msg.extend.count}</a>
 												</div>
 												<div class="zm-item-answer-author-info">
 													<fmt:formatDate value="${msg.extend.question.createDate}"
 														timeStyle="yyyy-MM-dd" />
 												</div>
-												<div class="zm-item-rich-text expandable js-collapse-body"
-													data-resourceid="123114" data-action="/answer/content"
-													data-author-name="李淼"
-													data-entry-url="/question/19857995/answer/13174385">
+												<div class="zm-item-rich-text expandable js-collapse-body">
 													<div class="zh-summary summary clearfix">${msg.extend.question.content}</div>
 												</div>
 											</div>
@@ -81,11 +78,7 @@
 												<div
 													class="zm-item-meta answer-actions clearfix js-contentActions">
 													<div class="zm-meta-panel">
-														<a data-follow="q:link"
-															class="follow-link zg-follow meta-item"
-															href="javascript:;" id="sfb-123114"> <i
-															class="z-icon-follow"></i>关注问题
-														</a> <a href="#" name="addcomment"
+														<a href="#" name="addcomment"
 															class="meta-item toggle-comment js-toggleCommentBox">
 															<i class="z-icon-comment"></i>${msg.extend.question.commentCount}条评论
 														</a>
