@@ -70,4 +70,8 @@ public class CommentService {
 	public void deleteComment(int commentId) {
 		commentDAO.updateStatus(1, commentId);
 	}
+
+	public Object getUserCommentCount(Integer uid) {
+		return null;
+	}
 }

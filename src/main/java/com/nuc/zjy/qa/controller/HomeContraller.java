@@ -14,6 +14,8 @@ import com.nuc.zjy.qa.bean.EntityType;
 import com.nuc.zjy.qa.bean.HostHolder;
 import com.nuc.zjy.qa.bean.Msg;
 import com.nuc.zjy.qa.bean.Question;
+import com.nuc.zjy.qa.bean.User;
+import com.nuc.zjy.qa.service.CommentService;
 import com.nuc.zjy.qa.service.FollowService;
 import com.nuc.zjy.qa.service.QuestionService;
 import com.nuc.zjy.qa.service.UserService;
@@ -42,6 +44,9 @@ public class HomeContraller {
 	@Autowired
 	FollowService followService;
 
+	@Autowired
+	CommentService commentService;
+
 	@RequestMapping(path = { "/", "/index" }, method = { RequestMethod.GET })
 	public String index(Model model) {
 		model.addAttribute("msgs", getQuestions(0));
@@ -51,7 +56,19 @@ public class HomeContraller {
 	@RequestMapping("/user/{userId}")
 	public String UserIndex(@PathVariable("userId") int userId, Model model) {
 		model.addAttribute("msgs", getQuestions(userId));
-		return "index";
+		User user = userService.getUser(userId);
+		Msg msg = new Msg();
+		msg.add("user", user);
+		msg.add("commentCount", commentService.getUserCommentCount(userId));
+		msg.add("followerCount", followService.getFollowerCount(userId, EntityType.ENTITY_USER));
+		msg.add("followeeCount", followService.getFolloweeCount(userId, EntityType.ENTITY_USER));
+		if (hostHolder.getUser() != null) {
+			msg.add("followed", followService.isFollower(hostHolder.getUser().getId(), userId, EntityType.ENTITY_USER));
+		} else {
+			msg.add("followed", false);
+		}
+		model.addAttribute("profileUser", msg);
+		return "profile";
 	}
 
 	private List<Msg> getQuestions(int userId) {
